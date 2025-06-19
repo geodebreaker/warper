@@ -21,13 +21,13 @@ function warp(b) {
 
   var da = parseInt($('#da').value);
   var db = parseInt($('#db').value) / 100;
-  var dc = b.sampleRate / parseInt($('#dc').value);
+  var dc = $('#dc').value == '0' ? null : b.sampleRate / parseInt($('#dc').value);
   var dd = (1 - parseInt($('#dd').value) / 100) ** 10;
   // var dd = 1.0 / (1.0 + Math.exp(-ddc / b.sampleRate));
   var ddp = 0;
   samples = samples
     .map(x => ddp = dd * x + (1 - dd) * ddp)
-    .map((_, i, a) => a[Math.floor(i / dc) * dc])
+    .map((x, i, a) => !dc ? x : a[Math.floor(i / dc) * dc])
     .map(x => Math.floor(x * da) / da)
     .map(x => x > db ? db : x < -db ? -db : x)
     .map(x => x * Math.max(0.5 / db, 1))
@@ -56,7 +56,15 @@ function piss(a, s) {
   let data = [];
   data.push(enc.encodeBuffer(new Int16Array(a.length).map((_, i) => a[i] * 32768)));
   data.push(enc.flush());
-  let url = URL.createObjectURL(new Blob(data, {type: 'audio/mp3'}));
+  let url = URL.createObjectURL(new Blob(data, { type: 'audio/mp3' }));
   $('#output').src = url;
   $('#output').controls = true;
 }
+
+// Signature
+(() => {
+  let b = 'background:#44a;font-size:40px;';
+  console.log(
+    '%cCode available at %chttps://github.com/geodebreaker/warper/%c\n(c) @geodebreaker 2025',
+    b, b + 'text-decoration:underline;font-weight:bold', 'background:#44a')
+})();
