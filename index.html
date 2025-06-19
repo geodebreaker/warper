@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>warper</title>
+  <script src='lib/lame.min.js'></script>
+  <script src="index.js"></script>
+</head>
+
+<body>
+  Bit depth: <input type="number" id="da" min="1" max="16" value="8"><br>
+  Distortion (Clipping %): <input type="number" id="db" min="1" max="100" value="90"><br>
+  Downsampling (Frequency): <input type="number" id="dc" min="1000" max="44100" value="8000"><br>
+  Low-pass filter (Power %): <input type="number" id="dd" min="0" max="100" value="10"><br>
+  <input id="audio" type="file" accept="audio/*"><button id="start">convert</button><br><br>
+  <audio id="output"></audio>
+</body>
+
+</html>
